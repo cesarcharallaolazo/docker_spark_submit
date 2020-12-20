@@ -1,0 +1,12 @@
+FROM jupyter/pyspark-notebook:latest
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y zip unzip
+
+WORKDIR SparkProjects/Project1
+
+ENTRYPOINT ["sh","spark_submit.sh"]
+
+CMD []

@@ -1,0 +1,33 @@
+FROM jupyter/pyspark-notebook:latest
+
+USER root
+
+ENV PYSPARK_PYTHON '/usr/bin/python2'
+ENV SPARK_DIRECTORY_NAME 'spark-2.4.0-bin-hadoop2.7'
+
+RUN apt-get update && \
+    apt-get install -y zip unzip && \
+    apt-get install -y openjdk-8-jdk
+
+ENV JAVA_HOME '/usr/lib/jvm/java-8-openjdk-amd64'
+
+RUN wget https://archive.apache.org/dist/spark/spark-2.4.0/${SPARK_DIRECTORY_NAME}.tgz \
+  && tar -zxvf ${SPARK_DIRECTORY_NAME}.tgz \
+  && mv ${SPARK_DIRECTORY_NAME}/ /usr/local/ \
+  && rm ${SPARK_DIRECTORY_NAME}.tgz
+
+ENV APACHE_SPARK_VERSION 2.4.0
+ENV SPARK_HOME '/usr/local/'${SPARK_DIRECTORY_NAME}
+ENV PATH ${SPARK_HOME}/bin:${PATH}
+ENV PYTHONPATH ${SPARK_HOME}/python/lib/py4j-0.10.7-src.zip
+ENV PYTHONPATH ${SPARK_HOME}/python:${PYTHONPATH}
+
+RUN  wget https://bootstrap.pypa.io/get-pip.py \
+  && python2 get-pip.py \
+  && pip2 install numpy
+
+WORKDIR SparkProjects/Project1
+
+#ENTRYPOINT ["sh","spark_submit.sh"]
+
+CMD []
