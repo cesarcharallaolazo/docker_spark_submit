@@ -38,4 +38,4 @@ In you current directory ($PWD root) has to exist the spark_submit.sh file, then
 
     docker run --rm -d -v $PWD:/home/jovyan/SparkProjects/Project1 pyspark3_sub
 
-And you pyspark code will run, when it finishes the docker container finishes also
+And you pyspark code will run, when it finishes the docker container finishes also.
