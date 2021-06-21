@@ -23,7 +23,7 @@ And you pyspark code will run, when it finishes the docker container dies also.
 
 ## PYTHON 3
 
-### Docker Build
+### Docker Build Spark
 
     docker build -t pyspark3_test -f v23_test_Dockerfile_pyspark_py3_spk3 .
     docker build -t pyspark3_sub -f v23_Dockerfile_pyspark_py3_spk3 .
@@ -39,3 +39,13 @@ In you current directory ($PWD root) has to exist the spark_submit.sh file, then
     docker run --rm -d -v $PWD:/home/jovyan/SparkProjects/Project1 pyspark3_sub
 
 And you pyspark code will run, when it finishes the docker container finishes also.
+
+### Docker Build Spark Structured Streaming
+
+    docker build -t pyspark3_sub_stream -f v23_Dockerfile_pyspark_py3_spk3_streaming .
+
+In you current directory ($PWD root) has to exist the spark_submit_streaming.sh file, then run:
+
+    docker run --rm -d -v $PWD:/home/jovyan/SparkProjects/Project1 --name spark_submit_streaming_run_fraud pyspark3_sub_stream:latest
+
+You have to call the jar files at jars folder in your spark_submit_streaming.sh script

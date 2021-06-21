@@ -1,0 +1,5 @@
+build:
+	cp ./spark/newrun.py ./target
+	cd ./spark && zip -x newrun.py -r ../target/spark.zip .
+	cd ./target && aws s3 cp . s3://my-bucket/spark_job/ --recursive
+	aws emr add-steps --cluster-id j-7xxxxx --steps Type=CUSTOM_JAR,Name='New_Run_Test',Jar='command-runner.jar',ActionOnFailure=CANCEL_AND_WAIT,Args='[spark-submit,--deploy-mode,client,--master,yarn,--py-files,s3://my-bucket/spark_job/spark.zip,s3://my-bucket/spark_job/newrun.py,--root_path,s3://my-bucket/spark_job/NEW_RUN/,--checkpoint_path,s3://my-bucket/spark_job/checkpoints/]'
